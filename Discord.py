@@ -1,26 +1,36 @@
 import discord
-from discord.ext import commands, tasks
-import os 
+from discord.ext import commands
+import os
 from dotenv import load_dotenv
 
 load_dotenv()
-token = os.getenv("Token")
+token = os.getenv("TOKEN")
+print("Token from .env:", token)
 
 intents = discord.Intents.all()
-intents.messages = True  # 이 부분을 추가
+intents.messages = True
 
-client = discord.Client(intents=intents)
+bot = commands.Bot(command_prefix='!', intents=intents)
 
-@client.event
-async def on_ready(): #봇이 실행되면 한번 실행됨
-    print("터미널에서 실행 됨") #
-    await client.change_presence(status=discord.Status.online, activity=discord.Game("과제"))
+@bot.event
+async def on_ready():
+    print(f'{bot.user}이(가) 준비 완료되었습니다.')
+    await bot.change_presence(status=discord.Status.online, activity=discord.Game("과제"))
 
-@client.event
+@bot.event
 async def on_message(message):
-    if message.content == "테스트": #메세지 감지
-        await message.channel.send("{} | {}, hello".format(message.author, message.author.mention)) #서버에 인사를 보냄
-        await message.author.send("{} | {}, User, hello".format(message.author, message.author.mention)) #개인 메세지로 인사를 보냄
+    if message.author == bot.user:
+        return
 
-#봇을 실행시키기 위한 토큰을 작성해주는 곳
-client.run(token)
+    if message.content == "테스트":
+        await message.channel.send(f'{message.author.mention}, hello')
+        await message.author.send(f'{message.author.mention}, User, hello')
+
+    await bot.process_commands(message)
+
+@bot.command(name='테스트')
+async def test_command(ctx):
+    await ctx.send(f'{ctx.author.mention}, hello')
+    await ctx.author.send(f'{ctx.author.mention}, User, hello')
+
+bot.run(token)
