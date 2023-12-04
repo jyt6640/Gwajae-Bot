@@ -1,11 +1,19 @@
 import discord
 from discord.ext import commands
-import os
+import dotenv
 from dotenv import load_dotenv
+import os
 
+# .env 파일로부터 환경 변수 로드
 load_dotenv()
+
+# .env 파일에서 토큰 가져오기
 token = os.getenv('TOKEN')
 print("Token from .env:", token)
+
+# .env 파일에 'TOKEN'이라는 키가 없으면 KeyError가 발생할 수 있으므로 주의
+# 가능하면 키가 없을 때 기본값을 사용하거나 예외 처리를 추가하는 것이 좋습니다.
+# 예: token = os.getenv('TOKEN', 'default_token_value')
 
 intents = discord.Intents.all()
 intents.messages = True
