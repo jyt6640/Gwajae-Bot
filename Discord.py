@@ -4,7 +4,7 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-token = os.getenv("TOKEN")
+token = os.getenv('TOKEN')
 print("Token from .env:", token)
 
 intents = discord.Intents.all()

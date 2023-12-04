@@ -174,5 +174,6 @@ poetry.toml
 pyrightconfig.json
 
 # End of httpswww.toptal.comdevelopersgitignoreapipython
+
 # 환경 변수 파일
-*.env
+.env
