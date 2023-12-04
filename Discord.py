@@ -1,5 +1,10 @@
 import discord
 from discord.ext import commands, tasks
+import os 
+from dotenv import load_dotenv
+
+load_dotenv()
+token = os.getenv("Token")
 
 intents = discord.Intents.all()
 intents.messages = True  # 이 부분을 추가
@@ -18,4 +23,4 @@ async def on_message(message):
         await message.author.send("{} | {}, User, hello".format(message.author, message.author.mention)) #개인 메세지로 인사를 보냄
 
 #봇을 실행시키기 위한 토큰을 작성해주는 곳
-client.run('MTE4MTE2MjM1MDQxNDQwNTY5NA.Gh1bba.LdDajaB8F3B3laB5o6NWxQWJzAtum42Gf8vAZY')
+client.run(token)
